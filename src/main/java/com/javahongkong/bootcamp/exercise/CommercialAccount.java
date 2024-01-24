@@ -1,6 +1,6 @@
 package com.javahongkong.bootcamp.exercise;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -10,11 +10,13 @@ import java.util.List;
  * Private Variables:<br>
  * {@link #authorizedUsers}: List&lt;Person&gt;<br>
  */
-public class CommercialAccount {
+public class CommercialAccount extends Account{
 	private List<Person> authorizedUsers;
 
 	public CommercialAccount(Company company, Long accountNumber, int pin, double startingDeposit) {
 		// complete the function
+		super(company, accountNumber, pin, startingDeposit);
+		authorizedUsers = new LinkedList<>();
 	}
 
 	/**
@@ -22,6 +24,8 @@ public class CommercialAccount {
 	 */
 	protected void addAuthorizedUser(Person person) {
 		// complete the function
+		if (!isAuthorizedUser(person)) 
+			authorizedUsers.add(person);
 	}
 
 	/**
@@ -31,6 +35,14 @@ public class CommercialAccount {
 	 */
 	public boolean isAuthorizedUser(Person person) {
 		// complete the function
-		return true;
+		if(person == null){
+			throw new IllegalArgumentException("Person object cannot be null");
+		}
+		for (Person p: authorizedUsers) {
+			if(person.getIdNumber() != p.getIdNumber()){
+				return true;
+			}
+		}
+		return false;
 	}
 }
